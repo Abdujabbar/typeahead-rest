@@ -12,16 +12,14 @@ class Trie:
     def __init__(self) -> None:
         self.count_words = 0
         self.root = TrieNode()
-        self.size = 0
 
     def insert(self, word):
-        word = word.strip().lower()
+        word = word.strip()
         self.count_words += 1
         crawl = self.root
         for c in word:
             if c not in crawl.children:
                 crawl.children[c] = TrieNode(c)
-                self.size += 1
             crawl = crawl.children[c]
 
         crawl.end_word = True
@@ -58,26 +56,22 @@ class Trie:
         return results
 
     def prefix_search(self, query, limit=10):
-        query = query.lower()
         crawl = self.root
+        found = True
         for c in query:
             if c not in crawl.children:
-                return []
+                found = False
+                break
             crawl = crawl.children[c]
 
-        suffixes = self.collect_suffix(crawl, limit, query)
-
-        if not suffixes:
-            self.insert(query)        
-
-        return suffixes
-
+        if not found:
+            self.insert(query)
+            return []
+        
+        return self.collect_suffix(crawl, limit, query)
 
     def __str__(self) -> str:
         return f"Count words: {self.count_words}"
-
-    def get_size(self) -> int:
-        return self.size
 
 
 def build_trie(contents):
