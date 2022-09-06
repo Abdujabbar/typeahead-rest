@@ -7,11 +7,12 @@ Installation
 Create virtual environment with the command:
 
 `
-
 python -m venv .venv
+`
 
 then activate
 
+`
 source .venv/bin/activate
 `
 
