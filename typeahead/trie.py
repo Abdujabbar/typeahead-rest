@@ -65,7 +65,13 @@ class Trie:
                 return []
             crawl = crawl.children[c]
 
-        return self.collect_suffix(crawl, limit, query)
+        suffixes = self.collect_suffix(crawl, limit, query)
+
+        if not suffixes:
+            self.insert(query)        
+
+        return suffixes
+
 
     def __str__(self) -> str:
         return f"Count words: {self.count_words}"
